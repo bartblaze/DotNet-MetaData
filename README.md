@@ -1,6 +1,6 @@
 # DotNet-MetaData
 
-This repository accompanies the blog post located at:
+This repository accompanies the blog post located at: https://bartblaze.blogspot.com/2024/03/analyse-hunt-and-classify-malware-using.html
 
 ## DotNetMetadata.yar
 Yara rule to display binary information to the console. Example use:
