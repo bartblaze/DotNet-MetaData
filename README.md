@@ -11,14 +11,16 @@ yara64.exe DotNetMetadata.yar c:\fakepath\all_samples
 The Yara rule requires at least Yara 4.2.0, that said, it's always recommended to get the latest release from https://github.com/VirusTotal/yara/releases.
 
 ## DotNetMetadata.py
-Python script to extract the GUID, MVID, TYPELIB, and Assembly Name of .NET binaries. Example use:
+Python script to extract the GUID, MVID, TYPELIB, and Assembly Name of .NET binaries. Note it currently works on Windows _only_. For making it work on Linux, you'll need to use Mono / Libmono.
+
+Example use:
 ```
 python DotNetMetadata.py c:\fakepath\all_samples -c samples_output.csv
 ```
 
 The Python script requires pythonnet to be installed (`pip install pythonnet`) and expects `dnlib.dll` to be in the same directory. 
 
-Get and compile dnlib from https://github.com/0xd4d/dnlib or download dnSpy-netframework.zip from https://github.com/dnSpyEx/dnSpy. The script should work correctly from dnlib version 3.3.2.0 up to and including 4.4.0.0.
+Get and compile dnlib from https://github.com/0xd4d/dnlib or download dnSpy-netframework.zip from https://github.com/dnSpyEx/dnSpy. The script should work correctly from dnlib version 3.3.2.0 up to and including 4.4.0.0, it's always recommended to use the latest dnlib version.
 
 ## Sample rules
 This folder contains sample rules described in the blog post. Do tweak and update according to your needs.
