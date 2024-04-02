@@ -11,22 +11,22 @@ yara64.exe DotNetMetadata.yar c:\fakepath\all_samples
 The Yara rule requires at least Yara 4.2.0, that said, it's always recommended to get the latest release from https://github.com/VirusTotal/yara/releases.
 
 ## DotNetMetadata.py
-Python script to extract the GUID, MVID, TYPELIB, and Assembly Name of .NET binaries. Note it currently works on Windows _only_. For making it work on Linux, you'll need to use Mono / Libmono.
+Python script to extract the GUID, MVID, TYPELIB, and Assembly Name of .NET binaries. The script works on both Windows and Linux, and I imagine OSX as well.
 
 Example use:
 ```
 python DotNetMetadata.py c:\fakepath\all_samples -c samples_output.csv
 ```
 
-The Python script requires pythonnet to be installed (`pip install pythonnet`) and expects `dnlib.dll` to be in the same directory. 
+The Python script requires pythonnet to be installed via `pip install pythonnet` and expects `dnlib.dll` to be in the same directory. For Linux-based systems, you'll also need to install Mono via `sudo apt-get install mono-complete`.
 
-Get and compile dnlib from https://github.com/0xd4d/dnlib or download dnSpy-netframework.zip from https://github.com/dnSpyEx/dnSpy. The script should work correctly from dnlib version 3.3.2.0 up to and including 4.4.0.0, it's always recommended to use the latest dnlib version.
+Get and compile dnlib from https://github.com/0xd4d/dnlib or download `dnSpy-netframework.zip` from https://github.com/dnSpyEx/dnSpy and grab dnlib.dll from the **bin** folder. The script should work correctly from dnlib version 3.3.2.0 up to and including 4.4.0.0, it's always recommended to use the latest dnlib version however.
 
 ## Sample rules
 This folder contains sample rules described in the blog post. Do tweak and update according to your needs.
 
 ## Example output
-Example output for a single file "Mpyiuepnw", a version of PureLogStealer with SHA256 hash: c201449a0845d659c32cc48f998b8cc95c20153bb1974e3a1ba80c53a90f1b27
+Example output for a single file "Mpyiuepnw", a version of PureLogStealer with SHA256 hash: `c201449a0845d659c32cc48f998b8cc95c20153bb1974e3a1ba80c53a90f1b27`
 
 ### Using the Yara rule:
 ```
