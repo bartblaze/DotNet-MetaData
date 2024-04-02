@@ -6,12 +6,12 @@
 # TYPELIB: the TYBELIB version.
 # Assembly Name: The name of the .NET assembly
 # TYPELIB ID/GUID and MVID: You can view these as the "imphash" but for .NET binaries (roughly)
-# Get and compile dnlib from https://github.com/0xd4d/dnlib or download dnSpy-netframework.zip from https://github.com/dnSpyEx/dnSpy
-# Tested with dnlib 3.3.2.0 and 4.4.0.0
-# To run on Linux, you'll need to fiddle with Mono / Libmono
+# Get and compile dnlib from https://github.com/0xd4d/dnlib or download dnSpy-netframework.zip from https://github.com/dnSpyEx/dnSpy and grab dnlib.dll from the 'bin' folder 
+# Tested with dnlib 3.3.2.0 and 4.4.0.0, any version from 3.x and onward should work
 # Author: @bartblaze
 # v0.1 - 2024-03-20 - Initial version
 # v0.2 - 2024-03-22 - Added assembly name extraction
+# v0.2 - 2024-04-02 - Small fixes and Linux support: the script can now also work on Linux, install Mono with 'sudo apt-get install mono-complete'
 import sys
 import os
 import argparse
@@ -28,7 +28,7 @@ try:
     clr.AddReference('dnlib')
 except Exception as e:
     print(f"Failed to add reference to dnlib: {e}")
-    print("Ensure dnlib.dll is in the same folder as this script and it is correctly compiled!")
+    print("Ensure dnlib.dll is in the same folder as this script and it is correctly compiled for your OS!")
     sys.exit(1)
 
 from dnlib.DotNet import ModuleDefMD, AssemblyDef
@@ -59,7 +59,14 @@ def get_yara_version():
             continue
     return "YARA version not found."
 
-# Print info on Python, pythonnet, dnlib, .NET and Yara
+def get_mono_version():
+    try:
+        mono_version = subprocess.check_output(["mono", "--version"], encoding="utf-8")
+        return mono_version.splitlines()[0]
+    except Exception as e:
+        return f"Failed to get Mono version: {e}"
+
+# Print info on Python, pythonnet, dnlib, .NET (Windows) or Mono (Linux) and Yara
 def print_versions():
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     print(f"Python version: {python_version}")
@@ -69,7 +76,7 @@ def print_versions():
             if line.startswith("Version:"):
                 print(f"pythonnet {line}")
     except Exception as e:
-        print("Failed to get pythonnet version: {e}")
+        print(f"Failed to get pythonnet version: {e}")
     try:
         dnlib_assembly = Assembly.LoadFile(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dnlib.dll'))
         dnlib_version = dnlib_assembly.GetName().Version
@@ -81,8 +88,9 @@ def print_versions():
         dotnet_version = subprocess.check_output(["dotnet", "--version"], encoding="utf-8").strip()
         print(f".NET environment version: {dotnet_version}")
     except Exception as e:
-        print("Failed to get .NET environment version: {e}")
+        print(f"Failed to get .NET environment version: {e}")
 
+    print(get_mono_version())
     print(get_yara_version())
 
 if args.info:
