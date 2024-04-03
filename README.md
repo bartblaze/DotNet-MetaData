@@ -18,9 +18,11 @@ Example use:
 python DotNetMetadata.py c:\fakepath\all_samples -c samples_output.csv
 ```
 
-The Python script requires pythonnet to be installed via `pip install pythonnet` and expects `dnlib.dll` to be in the same directory. For Linux-based systems, you'll also need to install Mono via `sudo apt-get install mono-complete`.
+The Python script requires pythonnet to be installed via `pip install pythonnet` and expects `dnlib.dll` to be in the same directory. 
 
-Get and compile dnlib from https://github.com/0xd4d/dnlib or download `dnSpy-netframework.zip` from https://github.com/dnSpyEx/dnSpy and grab dnlib.dll from the **bin** folder. The script should work correctly from dnlib version 3.3.2.0 up to and including 4.4.0.0, it's always recommended to use the latest dnlib version however.
+For Linux-based systems, you'll also need to install Mono by using `mono-complete` and the right package manager for your OS, for example for Ubuntu: `sudo apt-get install mono-complete`. If you already have mono-runtime, you will still need to install mono-complete in order for the script to function correctly.
+
+Get and compile dnlib from https://github.com/0xd4d/dnlib or download `dnSpy-netframework.zip` from https://github.com/dnSpyEx/dnSpy and grab `dnlib.dll` from the `bin` folder. The script should work correctly from dnlib version 3.3.2.0 up to and including 4.4.0.0. It's recommended however to always use the latest version of dnlib.
 
 ## Sample rules
 This folder contains sample rules described in the blog post. Do tweak and update according to your needs.
