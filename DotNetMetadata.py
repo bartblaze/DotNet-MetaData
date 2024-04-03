@@ -11,7 +11,8 @@
 # Author: @bartblaze
 # v0.1 - 2024-03-20 - Initial version
 # v0.2 - 2024-03-22 - Added assembly name extraction
-# v0.2 - 2024-04-02 - Small fixes and Linux support: the script can now also work on Linux, install Mono with 'sudo apt-get install mono-complete'
+# v0.3 - 2024-04-02 - Small fixes and Linux support: the script can now also work on Linux, install Mono with 'sudo apt-get install mono-complete'
+# v0.4 - 2024-04-03 - Better error handling on Linux.
 import sys
 import os
 import argparse
@@ -23,6 +24,19 @@ try:
 except ImportError:
     print("pythonnet is not installed. Install it using 'pip install pythonnet' and try again.")
     sys.exit(1)
+except RuntimeError as e:
+    if "Could not find libmono" in str(e):
+        print("Mono runtime (libmono) could not be found. Ensure Mono is installed and configured correctly!")
+        print("Install mono-complete using the package manager for your OS.")
+        sys.exit(1)
+    elif "Failed to create a default .NET runtime" in str(e):
+        print("Failed to create a default .NET runtime.")
+        print("You may need to install additional Mono libraries or install mono-complete.")
+        sys.exit(1)
+    else:
+        print("An unexpected error occurred while loading the .NET runtime:")
+        print(e)
+        sys.exit(1)
 
 try:
     clr.AddReference('dnlib')
